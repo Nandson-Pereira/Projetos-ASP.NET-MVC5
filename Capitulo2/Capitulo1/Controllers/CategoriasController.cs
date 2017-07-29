@@ -15,26 +15,40 @@ namespace Capitulo1.Controllers
         EFContext context = new EFContext();
 
 
-        ////GET: Delete Categorias
-        //public ActionResult Delete(int id)
-        //{
-        //    return View(categorias.Where(m => m.CategoriaId == id).First());
-        //}
 
-
-
-        ////ACTION POST que recebe o modelo para deletar a categoria de fato.
+        // POST: Fabricantes/Delete
         ////Esta será responsável por deletar os dados informados na visão de deletar.
         ////ACTION POST que  recebe os dados escolhidos pelo usuário para serem deletados.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(Categoria categoria)
-        //{
-        //    categorias.Remove(categorias.Where(m => m.CategoriaId == categoria.CategoriaId).First());
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            Categoria categoria = context.Categorias.Find(id);
+            context.Categorias.Remove(categoria);
+            context.SaveChanges();
 
-        //    return RedirectToAction("Index");
-        //}
+            return RedirectToAction("Index");
+        }
 
+
+        //GET: Delete Categorias
+        //action com a finalidade de criar uma visao para escolha do objeto a ser deletado do DB
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Categoria categoria = context.Categorias.Find(id);
+
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(categoria);
+        }
 
 
         //GET: Detalhhes da Categorias

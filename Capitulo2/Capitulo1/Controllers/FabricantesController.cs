@@ -15,6 +15,41 @@ namespace Capitulo1.Controllers
         EFContext context = new EFContext();
 
 
+        // POST: Fabricantes/Delete
+        ////Esta será responsável por deletar os dados informados na visão de deletar.
+        ////ACTION POST que  recebe os dados escolhidos pelo usuário para serem deletados.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            Fabricante fabricante = context.Fabricantes.Find(id);
+            context.Fabricantes.Remove(fabricante);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+        //GET: Delete Fabricante
+        //ACITION destinada a criação da visao pra escolha do item a ser deletado.
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //erro caso o valor enviado seja nulo
+            }
+
+            Fabricante fabricante = context.Fabricantes.Find(id);
+
+            if (fabricante == null)
+            {
+                return HttpNotFound(); //se o objeto nao for encontrado retorna um erro
+            }
+
+            return View(fabricante);
+        }
+
+
         //GET: Detalhhes da Fabricantes
         //Como não haverá interação com o usuário na visão a ser gerada, implementaremos apenas a action HTTP GET
         public ActionResult Details(int? id)
@@ -42,7 +77,7 @@ namespace Capitulo1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Fabricante fabricante)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 context.Entry(fabricante).State = EntityState.Modified;
                 context.SaveChanges();
@@ -59,21 +94,21 @@ namespace Capitulo1.Controllers
         //action GET para ser gerada a visão de interação com o usuário.
         public ActionResult Edit(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //erro caso o valor enviado seja nulo
             }
 
             Fabricante fabricante = context.Fabricantes.Find(id);
 
-            if(fabricante == null)
+            if (fabricante == null)
             {
                 return HttpNotFound(); //se o objeto nao for encontrado retorna um erro
             }
 
             return View(fabricante);
         }
-        
+
 
 
         ////ACTION POST que recebe o modelo para inserção.
