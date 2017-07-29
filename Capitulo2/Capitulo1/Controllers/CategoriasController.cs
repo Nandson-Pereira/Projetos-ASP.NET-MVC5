@@ -14,13 +14,6 @@ namespace Capitulo1.Controllers
     {
         EFContext context = new EFContext();
 
-        ////GET: Detalhhes da Categorias
-        ////Comon ão haverá interação com o usuário na visão a ser gerada, implementaremos apenas a action HTTP GET
-        //public ActionResult Details(int id)
-        //{
-        //    return View(categorias.Where(m => m.CategoriaId == id).First());
-        //}
-
 
         ////GET: Delete Categorias
         //public ActionResult Delete(int id)
@@ -42,6 +35,26 @@ namespace Capitulo1.Controllers
         //    return RedirectToAction("Index");
         //}
 
+
+
+        //GET: Detalhhes da Categorias
+        //Comon ão haverá interação com o usuário na visão a ser gerada, implementaremos apenas a action HTTP GET
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Categoria categoria = context.Categorias.Find(id);
+
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(categoria);
+        }
 
 
         //ACTION POST que recebe o modelo para edição e salvar a alteração..
