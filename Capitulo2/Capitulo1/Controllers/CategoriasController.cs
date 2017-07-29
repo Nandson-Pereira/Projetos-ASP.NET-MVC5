@@ -2,7 +2,9 @@
 using Capitulo1.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -41,32 +43,44 @@ namespace Capitulo1.Controllers
         //}
 
 
-        ////GET: Edição da Categorias
-        ////ACTION GET de edição de dados no controlador. informar os dados a serem editados pelo id na visão.
-        ////action GET para ser gerada a visão de interação com o usuário.
-        //public ActionResult Edit(int id)
-        //{
-        //    return View(categorias.Where(m => m.CategoriaId == id).First());
-        //}
 
+        //ACTION POST que recebe o modelo para edição e salvar a alteração..
+        //Esta será responsável por receber os dados informados na visão no editar escolhido.
+        //ACTION POST que  recebe os dados escolhidos pelo usuário para serem alterados.        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Categoria categoria)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Entry(categoria).State = EntityState.Modified;
+                context.SaveChanges();
 
-        ////ACTION POST que recebe o modelo para edição e salvar a alteração..
-        ////Esta será responsável por receber os dados informados na visão no editar escolhido.
-        ////ACTION POST que  recebe os dados escolhidos pelo usuário para serem alterados.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(Categoria categoria)
-        //{
-        //    //Forma 1 de realizar a operação de edição da categoria
-        //    categorias.Remove(categorias.Where(c => c.CategoriaId == categoria.CategoriaId).First());
-        //    categorias.Add(categoria);
+                return RedirectToAction("index");
+            }
 
-        //    //Forma 2 de realizar a operação de edição da categoria
-        //    //categorias[categorias.IndexOf(categorias.Where(c => c.CategoriaId == categoria.CategoriaId).First())] = categoria;
+            return View(categoria);
 
-        //    return RedirectToAction("Index");
-        //}
+        }
+        //GET: Edição da Categorias
+        //ACTION GET de edição de dados no controlador. informar os dados a serem editados pelo id na visão.
+        //action GET para ser gerada a visão de interação com o usuário.
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            Categoria categoria = context.Categorias.Find(id);
+
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(categoria);
+        }
 
 
         //ACTION POST que recebe o modelo para inserção.
