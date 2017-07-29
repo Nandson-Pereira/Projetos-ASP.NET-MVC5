@@ -5,6 +5,13 @@
     ViewBag.Title = "Lista de FABRICANTES";
 }
 
+@if (@TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         FABRICANTES REGISTRADOS
@@ -58,7 +65,7 @@
                 $('.table').dataTable();
             });
 
-        //precisamos enviar para o método dataTable() a coluna pela qual a listagem será classificada, 
+        //precisamos enviar para o método dataTable() a coluna pela qual a listagem será classificada,
         //de acordo com o código seguinte.O valor 1 refere- se à segunda coluna, e o "asc" significa ascendente/ crescente
         $('.table').dataTable({
             "order": [[1, "asc"]]

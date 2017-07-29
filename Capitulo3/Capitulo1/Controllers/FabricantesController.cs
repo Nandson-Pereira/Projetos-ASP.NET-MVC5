@@ -26,6 +26,9 @@ namespace Capitulo1.Controllers
             context.Fabricantes.Remove(fabricante);
             context.SaveChanges();
 
+            //criamos um valor associado à chave [Message].Na visão, será possível recuperar este valor.
+            TempData["Message"] = "Fabricante " + fabricante.Nome.ToUpper() + " foi removido!!";
+
             return RedirectToAction("Index");
         }
 
