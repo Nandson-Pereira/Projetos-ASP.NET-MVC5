@@ -11,7 +11,7 @@ namespace Capitulo1.Controllers
     public class CategoriasController : Controller
     {
         EFContext context = new EFContext();
-        
+
         ////GET: Detalhhes da Categorias
         ////Comon ão haverá interação com o usuário na visão a ser gerada, implementaremos apenas a action HTTP GET
         //public ActionResult Details(int id)
@@ -69,28 +69,27 @@ namespace Capitulo1.Controllers
 
 
 
-        ////GET: Criação da Categorias
-        ////ACTION GET de inserção de dados no controlador. informar os dados na visão.
-        ////action GET para ser gerada a visão de interação com o usuário.
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        //ACTION POST que recebe o modelo para inserção.
+        //Esta será responsável por receber os dados informados na visão.
+        //ACTION POST que  recebe os dados inseridos pelo usuário.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Categoria categoria)
+        {
+            context.Categorias.Add(categoria);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
 
 
-        ////ACTION POST que recebe o modelo para inserção.
-        ////Esta será responsável por receber os dados informados na visão.
-        ////ACTION POST que  recebe os dados inseridos pelo usuário.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(Categoria categoria)
-        //{
-        //    categorias.Add(categoria);
-        //    categoria.CategoriaId = categorias.Select(m => m.CategoriaId).Max() + 1;
-
-        //    return RedirectToAction("Index");
-        //}
-
+        //GET: Criação da Categorias
+        //ACTION GET de inserção de dados no controlador. informar os dados na visão.
+        //action GET para ser gerada a visão de interação com o usuário.
+        public ActionResult Create()
+        {
+            return View();
+        }
 
 
         // GET: Categorias
