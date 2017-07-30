@@ -61,6 +61,7 @@
     <script src=" @Url.Content("~/scripts/DataTables/jquery.dataTables.js")">></script>
     <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
     <script type="text/javascript">
+
             $(document).ready(function () {
                 $('.table').dataTable();
             });
@@ -70,5 +71,13 @@
         $('.table').dataTable({
             "order": [[1, "asc"]]
         });
+
+        //primeira instrução, que requisita o método removeClass(), removerá a classe active de todo elemento<li> . 
+        //Já a segunda instrução, por estar usando um elementonomeado (veja o # antes do nome liFabricantes ), 
+        //adicionará a classe active ao elemento liFabricantes .
+
+        $('li').removeClass("active");
+        $('#liFabricantes').addClass("active");
+
     </script>
 }

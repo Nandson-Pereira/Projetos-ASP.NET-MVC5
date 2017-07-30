@@ -29,3 +29,20 @@
         }
     </div>
 </div>
+
+@section ScriptPage {
+    <script src="~/Scripts/jquery.validate.min.js">
+    </script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js">
+    </script>
+    <script type="text/javascript">
+
+        //primeira instrução, que requisita o método removeClass(), removerá a classe active de todo elemento<li> .
+        //Já a segunda instrução, por estar usando um elementonomeado (veja o # antes do nome liFabricantes ),
+        //adicionará a classe active ao elemento liFabricantes .
+        $(document).ready(function () {
+            $('li').removeClass("active");
+            $('#liFabricantes').addClass("active");
+        });
+    </script>
+}
