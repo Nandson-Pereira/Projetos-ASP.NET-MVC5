@@ -21,13 +21,23 @@ namespace Capitulo1.Controllers
             var produtos = context.Produtos.Include(c => c.Categoria).Include(f => f.Fabricante).OrderBy(n => n.Nome);
             return View(produtos);
         }
+        
 
-
-
-        // GET: Produtos/Details/5
-        public ActionResult Details(int id)
+        // GET: Produtos/Details/5 rederriza a visao de detalhes.
+        public ActionResult Details(long? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Produto produto = context.Produtos.Where(p => p.ProdutoId == id).Include(c => c.Categoria).Include(f => f.Fabricante).First();
+
+            if (produto == null)
+            {
+                return HttpNotFound();
+            }
+            return View(produto);
         }
 
         // GET: Produtos/Create
