@@ -67,17 +67,21 @@
 @section styles{
     <link href="@Url.Content("~/content/DataTables/css/dataTables.bootstrap.css")" rel="stylesheet">
 }
-
 @section ScriptPage {
-    <script src="@Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
+    <script src=" @Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
     <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
-            $('li').removeClass("active");
-            $('#liProdutos').addClass("active");
-            $('.table').dataTable({
-                "order": [[1, "asc"]]
-            });
+            $('.table').dataTable();
         });
+
+        $('li').removeClass("active");
+        $('#liProdutos').addClass("active");
+
+        $('.table').dataTable({
+            "order": [[1, "asc"]]
+        });
+
     </script>
 }
