@@ -73,19 +73,24 @@ namespace Capitulo1.Controllers
             return View(produto);
         }
 
-        // POST: Produtos/Edit/5
+        // POST: Produtos/Edit/action Edit ( POST ) para persistir suas alterações.
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Produto produto)
         {
             try
             {
-                // TODO: Add update logic here
-
+                if (ModelState.IsValid)
+                {
+                    context.Entry(produto).State = EntityState.Modified;
+                    context.SaveChanges();
+                   
                 return RedirectToAction("Index");
+                }
+                return View(produto);
             }
             catch
             {
-                return View();
+                return View(produto);
             }
         }
 
