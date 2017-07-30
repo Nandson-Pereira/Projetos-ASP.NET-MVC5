@@ -8,7 +8,7 @@ namespace Capitulo1.Models
     public class Categoria
     {
         public int CategoriaId { get; set; }
-        public String Nome { get; set; }
+        public string Nome { get; set; }
         
     }
 }

@@ -8,7 +8,7 @@ namespace Capitulo1.Models
     public class Fabricante
     {
         public int FabricanteId { get; set; }
-        public String Nome { get; set; }
+        public string Nome { get; set; }
 
     }
 }
