@@ -7,7 +7,7 @@ namespace Capitulo1.Models
 {
     public class Produto
     {
-        public int? Produtoid { get; set; }
+        public int? ProdutoId { get; set; }
         public string Nome { get; set; }
 
         public int? CategoriaId { get; set; }
