@@ -52,7 +52,7 @@
                         <td>
                             @Html.ActionLink("Alterar", "Edit", new { id = item.ProdutoId }) -
                             @Html.ActionLink("Detalhes", "Details", new { id = item.ProdutoId }) -
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.ProdutoId })
+                            @Html.ActionLink("Apagar", "Delete", new { id = item.ProdutoId })
                         </td>
                     </tr>
                 }
@@ -67,6 +67,8 @@
 @section styles{
     <link href="@Url.Content("~/content/DataTables/css/dataTables.bootstrap.css")" rel="stylesheet">
 }
+
+
 @section ScriptPage {
     <script src=" @Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
     <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
