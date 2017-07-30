@@ -28,7 +28,7 @@ namespace Capitulo1.Controllers
             context.SaveChanges();
 
             //criamos um valor associado à chave [Message].Na visão, será possível recuperar este valor.
-            TempData["Message"] = "Categoria " + categoria.Nome.ToUpper() + " foi removido!!";
+            TempData["Message"] = "Categoria " + categoria.Nome.ToUpper() + " foi removida!!";
 
             return RedirectToAction("Index");
         }
