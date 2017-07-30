@@ -68,28 +68,16 @@
     <link href="@Url.Content("~/content/DataTables/css/dataTables.bootstrap.css")" rel="stylesheet">
 }
 
-@section ScriptPage
-    {
-    <script src=" @Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
+@section ScriptPage {
+    <script src="@Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
     <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
     <script type="text/javascript">
-
         $(document).ready(function () {
-            $('.table').dataTable();
+            $('li').removeClass("active");
+            $('#liProdutos').addClass("active");
+            $('.table').dataTable({
+                "order": [[1, "asc"]]
+            });
         });
-
-        //precisamos enviar para o método dataTable() a coluna pela qual a listagem será classificada,
-        //de acordo com o código seguinte.O valor 1 refere- se à segunda coluna, e o "asc" significa ascendente/ crescente
-        $('.table').dataTable({
-            "order": [[1, "asc"]]
-        });
-
-        //primeira instrução, que requisita o método removeClass(), removerá a classe active de todo elemento<li> .
-        //Já a segunda instrução, por estar usando um elementonomeado (veja o # antes do nome liFabricantes ),
-        //adicionará a classe active ao elemento liFabricantes .
-
-        $('li').removeClass("active");
-        $('#liProdutos').addClass("active");
-
     </script>
 }
