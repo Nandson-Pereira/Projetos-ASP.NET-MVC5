@@ -35,6 +35,11 @@
         </div>
     </div>
 }
+
+<!-- Utilização do  Partial Views _PorFabricante.cshtml  Com isso, cria-se uma visão master-detail entre Fabricante e Produtos-->
+@Html.Partial("~/Views/Produtos/_PorCategoria.cshtml", Model.Produtos.ToList())
+
+
 @section ScriptPage {
     <script src="~/Scripts/jquery.validate.min.js">
     </script>

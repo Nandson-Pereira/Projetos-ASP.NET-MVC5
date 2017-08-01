@@ -7,7 +7,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        Dados a ser removido
+        FABRICANTE a ser DELETADO
     </div>
     <div class="panel-body">
         <div class="form-group">
@@ -29,6 +29,10 @@
         }
     </div>
 </div>
+
+
+<!-- Utilização do  Partial Views _PorFabricante.cshtml  Com isso, cria-se uma visão master-detail entre Fabricante e Produtos-->
+@Html.Partial("~/Views/Produtos/_PorFabricante.cshtml", Model.Produtos.ToList())
 
 @section ScriptPage {
     <script src="~/Scripts/jquery.validate.min.js">

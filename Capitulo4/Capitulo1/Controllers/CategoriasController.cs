@@ -43,7 +43,7 @@ namespace Capitulo1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Categoria categoria = context.Categorias.Find(id);
+            Categoria categoria = context.Categorias.Where(c => c.CategoriaId == id).Include("Produtos.Categoria").First();
 
             if (categoria == null)
             {
@@ -102,7 +102,7 @@ namespace Capitulo1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Categoria categoria = context.Categorias.Find(id);
+            Categoria categoria = context.Categorias.Where(c => c.CategoriaId == id).Include("Produtos.Categoria").First();
 
             if (categoria == null)
             {
