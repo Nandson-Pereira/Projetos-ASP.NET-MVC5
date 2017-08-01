@@ -18,18 +18,23 @@ namespace Capitulo1.Controllers
         // POST: Fabricantes/Delete
         ////Esta será responsável por deletar os dados informados na visão de deletar.
         ////ACTION POST que  recebe os dados escolhidos pelo usuário para serem deletados.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost]        
         public ActionResult Delete(int id)
         {
-            Fabricante fabricante = context.Fabricantes.Find(id);
-            context.Fabricantes.Remove(fabricante);
-            context.SaveChanges();
+            try
+            {
+                Fabricante fabricante  = context.Fabricantes.Find(id);
+                context.Fabricantes.Remove(fabricante);
+                context.SaveChanges();
 
-            //criamos um valor associado à chave [Message].Na visão, será possível recuperar este valor.
-            TempData["Message"] = "Fabricante " + fabricante.Nome.ToUpper() + " foi removido!!";
+                TempData["Message"] = "Fabricante " + fabricante.Nome.ToUpper()  + " foi removido!!!!!!!!";
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
 
