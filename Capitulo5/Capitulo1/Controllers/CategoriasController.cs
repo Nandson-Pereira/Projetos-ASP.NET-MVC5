@@ -1,19 +1,64 @@
-﻿using Capitulo1.Contexts;
-using Capitulo1.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using Modelo.Tabelas;
+using Servico.Cadastros;
+using Servico.Tabelas;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Capitulo1.Controllers
 {
     public class CategoriasController : Controller
     {
-        EFContext context = new EFContext();
 
+        //Declaração dos serviços dsponiveis para Produto
+
+        private ProdutoServico produtoServico = new ProdutoServico();
+        private CategoriaServico categoriaServico = new CategoriaServico();
+        private FabricanteServico fabricanteServico = new FabricanteServico();
+
+
+
+        //buscando eliminar a redudancia (mesmos codigos para obter o objeto) no codigo das actions details, Edit e Delete da 
+        //exibição do produto, criaremos um metodo privado ObterVisaoProdutoPorId(int? id) chamada ao serviço que retornará 
+        //o produto solicitado pelo usuário para exibição ja que esse codigo repetia-se nos GETS de details, Edit e Delete.
+
+        private ActionResult ObterVisaoCategoriaPorId(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Categoria categoria = categoriaServico.ObterCategoriaPorId((int)id);
+
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(categoria);
+        }
+
+
+
+        // Com a implementação das action GET , nos restam agora as que respondem ao HTTP POST.Duas delas referem-se à atualização ou
+        // inserção de um produto. Eelas são semelhantes. Desta maneira, vamos criar um método privado para estas requisições.
+        // implementação  há a invocação ao método de serviço para gravar o produto, independente de ser atualização ou inserção
+        private ActionResult GravarCategoria(Categoria categoria)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    categoriaServico.GravarCategoria(categoria);
+                    return RedirectToAction("Index");
+                }
+                return View(categoria);
+            }
+            catch
+            {
+                return View(categoria);
+            }
+        }
 
 
         // POST: Fabricantes/Delete
@@ -23,14 +68,19 @@ namespace Capitulo1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Categoria categoria = context.Categorias.Find(id);
-            context.Categorias.Remove(categoria);
-            context.SaveChanges();
+            try
+            {
+                Categoria categoria = categoriaServico.EliminarCategoriaPorId(id);
+                //criamos um valor associado à chave [Message].Na visão, será possível recuperar este valor
+                TempData["Message"] = "Categoria " + categoria.Nome.ToUpper() + " foi removida!!!!";
 
-            //criamos um valor associado à chave [Message].Na visão, será possível recuperar este valor.
-            TempData["Message"] = "Categoria " + categoria.Nome.ToUpper() + " foi removida!!";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
 
-            return RedirectToAction("Index");
         }
 
 
@@ -38,19 +88,7 @@ namespace Capitulo1.Controllers
         //action com a finalidade de criar uma visao para escolha do objeto a ser deletado do DB
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Categoria categoria = context.Categorias.Where(c => c.CategoriaId == id).Include("Produtos.Categoria").First();
-
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(categoria);
+            return ObterVisaoCategoriaPorId(id);
         }
 
 
@@ -58,19 +96,7 @@ namespace Capitulo1.Controllers
         //Comon ão haverá interação com o usuário na visão a ser gerada, implementaremos apenas a action HTTP GET
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Categoria categoria = context.Categorias.Where(c => c.CategoriaId == id).Include("Produtos.Categoria").First();
-
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(categoria);
+            return ObterVisaoCategoriaPorId(id);
         }
 
 
@@ -81,35 +107,14 @@ namespace Capitulo1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Categoria categoria)
         {
-            if (ModelState.IsValid)
-            {
-                context.Entry(categoria).State = EntityState.Modified;
-                context.SaveChanges();
-
-                return RedirectToAction("index");
-            }
-
-            return View(categoria);
-
+            return GravarCategoria(categoria);
         }
         //GET: Edição da Categorias
         //ACTION GET de edição de dados no controlador. informar os dados a serem editados pelo id na visão.
         //action GET para ser gerada a visão de interação com o usuário.
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Categoria categoria = context.Categorias.Where(c => c.CategoriaId == id).Include("Produtos.Categoria").First();
-
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(categoria);
+            return ObterVisaoCategoriaPorId(id);
         }
 
 
@@ -120,10 +125,7 @@ namespace Capitulo1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Categoria categoria)
         {
-            context.Categorias.Add(categoria);
-            context.SaveChanges();
-
-            return RedirectToAction("Index");
+            return GravarCategoria(categoria);
         }
 
 
@@ -140,7 +142,7 @@ namespace Capitulo1.Controllers
         //ACTION principal onde é listada as categorias.
         public ActionResult Index()
         {
-            return View(context.Categorias.OrderBy(c => c.Nome));
+            return View(categoriaServico.ObterCategoriasClassificadasPorNome());
         }
     }
 }

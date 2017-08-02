@@ -1,19 +1,63 @@
-﻿using Capitulo1.Contexts;
-using Capitulo1.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using Modelo.Cadastros;
+using Servico.Cadastros;
+using Servico.Tabelas;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Capitulo1.Controllers
 {
     public class FabricantesController : Controller
     {
-        EFContext context = new EFContext();
+        //Declaração dos serviços dsponiveis para Produto
 
+        private ProdutoServico produtoServico = new ProdutoServico();
+        private CategoriaServico categoriaServico = new CategoriaServico();
+        private FabricanteServico fabricanteServico = new FabricanteServico();
+
+
+
+        //buscando eliminar a redudancia (mesmos codigos para obter o objeto) no codigo das actions details, Edit e Delete da 
+        //exibição do produto, criaremos um metodo privado ObterVisaoProdutoPorId(int? id) chamada ao serviço que retornará 
+        //o produto solicitado pelo usuário para exibição ja que esse codigo repetia-se nos GETS de details, Edit e Delete.
+
+        private ActionResult ObterVisaoFabricantePorId(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Fabricante fabricante = fabricanteServico.ObterFabricantePorId((int)id);
+
+            if (fabricante == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(fabricante);
+        }
+
+
+
+        // Com a implementação das action GET , nos restam agora as que respondem ao HTTP POST.Duas delas referem-se à atualização ou
+        // inserção de um produto. Eelas são semelhantes. Desta maneira, vamos criar um método privado para estas requisições.
+        // implementação  há a invocação ao método de serviço para gravar o produto, independente de ser atualização ou inserção
+        private ActionResult GravarFabricante(Fabricante fabricante)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    fabricanteServico.GravarFabricante(fabricante);
+                    return RedirectToAction("Index");
+                }
+                return View(fabricante);
+            }
+            catch
+            {
+                return View(fabricante);
+            }
+        }
 
         // POST: Fabricantes/Delete
         ////Esta será responsável por deletar os dados informados na visão de deletar.
@@ -23,11 +67,9 @@ namespace Capitulo1.Controllers
         {
             try
             {
-                Fabricante fabricante  = context.Fabricantes.Find(id);
-                context.Fabricantes.Remove(fabricante);
-                context.SaveChanges();
-
-                TempData["Message"] = "Fabricante " + fabricante.Nome.ToUpper()  + " foi removido!!!!!!!!";
+                Fabricante fabricante = fabricanteServico.EliminarFabricantePorId(id);
+                //criamos um valor associado à chave [Message].Na visão, será possível recuperar este valor
+                TempData["Message"] = "Fabricante " + fabricante.Nome.ToUpper() + " foi removido!!!!";
 
                 return RedirectToAction("Index");
             }
@@ -42,19 +84,7 @@ namespace Capitulo1.Controllers
         //ACITION destinada a criação da visao pra escolha do item a ser deletado.
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //erro caso o valor enviado seja nulo
-            }
-
-            Fabricante fabricante = context.Fabricantes.Where(f => f.FabricanteId == id).Include("Produtos.Categoria").First();
-
-            if (fabricante == null)
-            {
-                return HttpNotFound(); //se o objeto nao for encontrado retorna um erro
-            }
-
-            return View(fabricante);
+            return ObterVisaoFabricantePorId(id);
         }
 
 
@@ -62,19 +92,7 @@ namespace Capitulo1.Controllers
         //Como não haverá interação com o usuário na visão a ser gerada, implementaremos apenas a action HTTP GET
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //erro caso o valor enviado seja nulo
-            }
-
-            Fabricante fabricante = context.Fabricantes.Where(f => f.FabricanteId == id).Include("Produtos.Categoria").First();
-
-            if (fabricante == null)
-            {
-                return HttpNotFound(); //se o objeto nao for encontrado retorna um erro
-            }
-
-            return View(fabricante);
+            return ObterVisaoFabricantePorId(id);
         }
 
 
@@ -85,15 +103,7 @@ namespace Capitulo1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Fabricante fabricante)
         {
-            if (ModelState.IsValid)
-            {
-                context.Entry(fabricante).State = EntityState.Modified;
-                context.SaveChanges();
-
-                return RedirectToAction("index");
-            }
-
-            return View(fabricante);
+            return GravarFabricante(fabricante);
         }
 
 
@@ -102,19 +112,7 @@ namespace Capitulo1.Controllers
         //action GET para ser gerada a visão de interação com o usuário.
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //erro caso o valor enviado seja nulo
-            }
-
-            Fabricante fabricante = context.Fabricantes.Where(f => f.FabricanteId == id).Include("Produtos.Categoria").First();
-
-            if (fabricante == null)
-            {
-                return HttpNotFound(); //se o objeto nao for encontrado retorna um erro
-            }
-
-            return View(fabricante);
+            return ObterVisaoFabricantePorId(id);
         }
 
 
@@ -126,10 +124,7 @@ namespace Capitulo1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Fabricante fabricante)
         {
-            context.Fabricantes.Add(fabricante);
-            context.SaveChanges();
-
-            return RedirectToAction("index");
+            return GravarFabricante(fabricante);
         }
 
 
@@ -144,7 +139,7 @@ namespace Capitulo1.Controllers
         // GET: Fabricantes utilizada para criação da visao inicial index com a listagem de Fabricantes
         public ActionResult Index()
         {
-            return View(context.Fabricantes.OrderBy(c => c.Nome));
+            return View(fabricanteServico.ObterFabricantesClassificadosPorNome());
         }
     }
 }
