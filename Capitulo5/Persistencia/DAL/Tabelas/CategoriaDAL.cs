@@ -1,5 +1,4 @@
-﻿using Modelo.Cadastros;
-using Modelo.Tabelas;
+﻿using Modelo.Tabelas;
 using Persistencia.Contexts;
 using System.Data.Entity;
 using System.Linq;
