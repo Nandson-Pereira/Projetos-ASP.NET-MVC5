@@ -1,9 +1,6 @@
-﻿using Capitulo1.Models;
-using System;
-using System.Collections.Generic;
+﻿using Modelo.Cadastros;
+using Modelo.Tabelas;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace Capitulo1.Contexts
 {

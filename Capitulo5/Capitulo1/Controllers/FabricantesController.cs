@@ -1,11 +1,8 @@
 ﻿using Capitulo1.Contexts;
-using Capitulo1.Models;
-using System;
-using System.Collections.Generic;
+using Modelo.Cadastros;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Capitulo1.Controllers
