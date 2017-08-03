@@ -1,5 +1,6 @@
 ﻿using Modelo.Cadastros;
 using Modelo.Tabelas;
+using Persistencia.Migrations;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -8,9 +9,8 @@ namespace Persistencia.Contexts
     public class EFContext : DbContext
     {
         public EFContext() : base ("ASP_NET_MVC")
-        {  
-            //temporario ate o capitulo6 do Code Fist Migrations que resolve deletar  a base toda ao alterar um dominio(classe).
-            Database.SetInitializer<EFContext>( new DropCreateDatabaseIfModelChanges<EFContext>());
+        {
+            Database.SetInitializer<EFContext>(new MigrateDatabaseToLatestVersion<EFContext, Configuration>());
         }
 
         public DbSet<Categoria> Categorias { get; set; }
