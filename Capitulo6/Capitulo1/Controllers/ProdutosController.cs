@@ -70,10 +70,13 @@ namespace Capitulo1.Controllers
                     produtoServico.GravarProduto(produto);
                     return RedirectToAction("Index");
                 }
+
+                PopularViewBag(produto);
                 return View(produto);
             }
             catch
             {
+                PopularViewBag(produto);
                 return View(produto);
             }
         }
