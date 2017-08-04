@@ -351,7 +351,19 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\package.json" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\AUTHORS.txt" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\index.html" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.custom\LICENSE.txt" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -393,6 +405,8 @@
     <Content Include="Views\Produtos\Delete.cshtml" />
     <Content Include="Views\Produtos\_PorFabricante.cshtml" />
     <Content Include="Views\Produtos\_PorCategoria.cshtml" />
+    <Content Include="Views\Produtos\_PartialDetailsAndDeleteContentPanelBody.cshtml" />
+    <Content Include="Views\Produtos\_PartialCreateAndEditContentPanelBody.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
