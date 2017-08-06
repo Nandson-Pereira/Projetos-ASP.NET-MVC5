@@ -404,6 +404,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Seguranca\Models\Usuario.cs" />
     <Compile Include="Areas\Seguranca\SegurancaAreaRegistration.cs" />
