@@ -11,7 +11,7 @@ namespace Persistencia.Migrations
         {
             AutomaticMigrationsEnabled = true;
             ContextKey = "Persistencia.Contexts.EFContext";
-            AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Persistencia.Contexts.EFContext context)
