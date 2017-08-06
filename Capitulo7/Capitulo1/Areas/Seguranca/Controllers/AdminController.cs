@@ -15,7 +15,8 @@ namespace Capitulo1.Areas.Seguranca.Controllers
     {
 
 
-        // GET: DETAILS criar a visao para usuario  
+        // GET: DETAILS criar a visao para usuario
+        [Authorize]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -35,6 +36,7 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // POST: DELETE  action que receberá estes dados, que enfim realizará a persistência deles na base de dados
+        [Authorize]
         [HttpPost]
         public ActionResult Delete(Usuario usuario)
         {
@@ -62,6 +64,7 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // GET: DEELETE criar a visao para usuario Deletar
+        [Authorize]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -81,6 +84,7 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // POST: EDIT  action que receberá estes dados, que enfim realizará a persistência deles na base de dados
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(UsuarioViewModel usuarioViewModel)
         {
@@ -109,6 +113,7 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // GET: EDIT criar a visao para usuario Editar
+        [Authorize]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -135,12 +140,14 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // GET: CREATE criar a visao para usuario criar
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: CREATE  action que receberá estes dados, que enfim realizará a persistência deles na base de dados
+        [Authorize]
         [HttpPost]
         public ActionResult Create(UsuarioViewModel model)
         {
@@ -168,7 +175,7 @@ namespace Capitulo1.Areas.Seguranca.Controllers
         }
 
 
-        //método específico (e privado) para o registro de possíveis erros ocorridos durante a tentativa de inserção de um usuário
+        //método específico (e privado) para o registro de possíveis erros ocorridos durante a tentativa de inserção de um usuário       
         private void AddErrorsFromResult(IdentityResult result)
         {
             foreach (string error in result.Errors)
@@ -179,12 +186,13 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // GET: Seguranca/Admin
+        [Authorize]
         public ActionResult Index()
         {
             return View(GerenciadorUsuario.Users);
         }
 
-
+        
         private GerenciadorUsuario GerenciadorUsuario
         {
             get
