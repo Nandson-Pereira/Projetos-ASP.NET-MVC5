@@ -17,7 +17,8 @@ namespace Capitulo1.DAL
         {
             return new IdentityDbContextAplicacao();
         }
-       
+
+        public System.Data.Entity.DbSet<Capitulo1.Areas.Seguranca.Models.Papel> IdentityRoles { get; set; }
     }
     public class IdentityDbInit : DropCreateDatabaseIfModelChanges<IdentityDbContextAplicacao>
     {
