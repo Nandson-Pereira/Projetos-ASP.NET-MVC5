@@ -1,0 +1,77 @@
+﻿@model Modelo.Cadastros.Produto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Editar PRODUTO";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Alteração de PRODUTO
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <!--   <h4>Produto</h4>
+                   <hr /> -->
+
+                @Html.HiddenFor(model => model.ProdutoId)
+
+                @Html.Partial("~/Views/Produtos/_PartialCreateAndEditContentPanelBody.cshtml", Model)    <!--Partial View -->
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="SALVAR" class="btn btn-info" />
+                        @Html.ActionLink("Lista de PRODUTOS", "Index", null, new { @class = "btn btn-warning" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section styles{
+    <link href="~/Scripts/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+}
+
+@section ScriptPage {
+
+    <script src="~/scripts/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('li').removeClass("active");
+            $('#liProdutos').addClass("active");
+        });
+
+    </script>
+
+    <!--  Traduzindo para pt-br as labels e opções do o datepicke    -->
+    <script>
+
+        $(function () {
+            $("#datepicker").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                closeText: "Fechar",
+                prevText: "Anterior",
+                weekHeader: "Sm",
+                firstDay: 0,
+                nextText: "Próximo",
+                changeMonth: true,
+                currentText: "Hoje",
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+            });
+        });
+
+    </script>
+
+}
