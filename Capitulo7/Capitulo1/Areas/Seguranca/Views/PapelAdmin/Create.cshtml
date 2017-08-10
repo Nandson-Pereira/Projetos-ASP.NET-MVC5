@@ -1,42 +1,36 @@
 ﻿@model string
-
 @{
+
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Registrando um NOVO PAPEL";
+    ViewBag.Title = "NOVO PAPEL";
 }
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Registro de um NOVO PAPEL
+            NOVO PAPEL
         </div>
         <div class="panel-body">
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-10">
-                        <label>Descrição</label>
-                        <input name="nome" value="@Model"
-                               class="form-control" />
+                        <label>Nome</label>
+                        <input name="nome" value="@Model" class="form-control" />
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="panel-footer panel-info">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Adicionar Papel" class="btn btn-danger" />
-                @Html.ActionLink("Listagem de PAPÉIS", "Index", null, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Retornar para a listagem de PAPÉIS", "Index", null, new { @class = "btn btn-warning" })
             </div>
             <br />
             <br />
         </div>
-
     </div>
 }
-
 
 @section styles{
     <link href="@Url.Content("~/content/DataTables/css/dataTables.bootstrap.css")" rel="stylesheet">
@@ -49,14 +43,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('.table').dataTable();
-        });
-
-        $('li').removeClass("active");
-        $('#liPapeis').addClass("active");
-
-        $('.table').dataTable({
-            "order": [[1, "asc"]]
+            $('li').removeClass("active");
+            $('#liPapeis').addClass("active");
         });
 
     </script>
