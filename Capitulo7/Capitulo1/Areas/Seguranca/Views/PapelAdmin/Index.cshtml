@@ -58,3 +58,28 @@
 </div>
 
 @Html.ActionLink("Criar um novo papel", "Create", null, new { @class = "btn btn-primary" })
+
+
+@section styles{
+    <link href="@Url.Content("~/content/DataTables/css/dataTables.bootstrap.css")" rel="stylesheet">
+}
+
+
+@section ScriptPage {
+    <script src=" @Url.Content("~/scripts/DataTables/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/scripts/DataTables/dataTables.bootstrap.js")"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.table').dataTable();
+        });
+
+        $('li').removeClass("active");
+        $('#liPapeis').addClass("active");
+
+        $('.table').dataTable({
+            "order": [[1, "asc"]]
+        });
+
+    </script>
+}
