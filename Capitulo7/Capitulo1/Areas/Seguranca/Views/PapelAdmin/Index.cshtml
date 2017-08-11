@@ -46,8 +46,7 @@
                     <td>
                         @using (Html.BeginForm("Delete", "PapelAdmin", new { id = role.Id }))
                         {
-                            @Html.ActionLink("Alterar", "Edit", new { id = role.Id }, new { @class = "btn btn-primary btn-xs" })
-                            @Html.ActionLink("Detalhes", "Details", new { id = role.Id }, new { @class = "btn btn-info btn-xs" })
+                            @Html.ActionLink("Alterar", "Edit", new { id = role.Id }, new { @class = "btn btn-primary btn-xs" })                          
 
                             <button class="btn btn-danger btn-xs" type="submit"> Delete </button>
                         }
