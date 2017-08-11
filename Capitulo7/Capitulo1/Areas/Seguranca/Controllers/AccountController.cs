@@ -15,6 +15,11 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 {
     public class AccountController : Controller
     {
+        public ActionResult Logout()
+        {
+            AuthManager.SignOut();
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
 
         //GET LOGIN primeira action que o argumento que chega é uma  string, de mesmo nome da variável da Querystring apontada
         public ActionResult Login(string returnUrl)

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Capitulo1.Infraestrutura
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" charset="utf-8" />
@@ -14,44 +15,60 @@
                     Desenvolvimento em ASP.NET MVC
                     <small class="text-danger">Utilizando o Bootstrap</small>
                 </h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3 col-md-3 bg-success">
-                <ul class="nav nav-pills nav-stacked">
+                <div style="text-align:right;">
 
-                    @*<li id="liHome" role="presentation" class="active"><a href="#">Home</a></li>*@
-                    <li id="liHome" role="presentation" class="active">
-                        @Html.ActionLink("HOME", "Index", "HOME")
-                    </li>
-                    <li id="liCategorias" role="presentation">
-                        @Html.ActionLink("Categorias", "Index", "Categorias")
-                    </li>
-                    <li id="liFabricantes" role="presentation">
-                        @Html.ActionLink("Fabricantes", "Index", "Fabricantes")
-                    </li>
-                    <li id="liProdutos" role="presentation">
-                        @Html.ActionLink("Produtos", "Index", "Produtos")
-                    </li>
-                    <li id="liUsuarios" role="presentation">
-                        @Html.ActionLink("Usuários", "Index", "Admin", new { area = "Seguranca" }, null)
-                    </li>
-                    <li id="liPapeis" role="presentation">
-                        @Html.ActionLink("Papéis", "Index", "PapelAdmin", new { area = "Seguranca" }, null)
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-9 col-md-9">
-                <br />
-                @RenderBody()
+                    @{
+                        if (Html.GetAuthenticatedUser().ToString() != "")
+                        {
+                            @Html.GetAuthenticatedUser();
+                            @Html.ActionLink(" - Sair", "Logout", "Account");
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Acessar", "Login", "Account", new { area = "Seguranca" }, null);
+                        }
+                    }
+                </div>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-xs-12 col-md-12 bg-danger">
-                <small>Layout com Bootstrap</small>
-            </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3 col-md-3 bg-success">
+            <ul class="nav nav-pills nav-stacked">
+
+                @*<li id="liHome" role="presentation" class="active"><a href="#">Home</a></li>*@
+                <li id="liHome" role="presentation" class="active">
+                    @Html.ActionLink("HOME", "Index", "HOME")
+                </li>
+                <li id="liCategorias" role="presentation">
+                    @Html.ActionLink("Categorias", "Index", "Categorias")
+                </li>
+                <li id="liFabricantes" role="presentation">
+                    @Html.ActionLink("Fabricantes", "Index", "Fabricantes")
+                </li>
+                <li id="liProdutos" role="presentation">
+                    @Html.ActionLink("Produtos", "Index", "Produtos")
+                </li>
+                <li id="liUsuarios" role="presentation">
+                    @Html.ActionLink("Usuários", "Index", "Admin", new { area = "Seguranca" }, null)
+                </li>
+                <li id="liPapeis" role="presentation">
+                    @Html.ActionLink("Papéis", "Index", "PapelAdmin", new { area = "Seguranca" }, null)
+                </li>
+            </ul>
         </div>
+        <div class="col-xs-9 col-md-9">
+            <br />
+            @RenderBody()
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12 col-md-12 bg-danger">
+            <small>Layout com Bootstrap</small>
+        </div>
+    </div>
     </div>
     <script src="@Url.Content("~/scripts/jquery-3.1.1.js")"></script>
     <script src="@Url.Content("~/scripts/bootstrap.js")"></script>
