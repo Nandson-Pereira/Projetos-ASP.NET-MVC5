@@ -3,6 +3,7 @@ using System.Net;
 using Modelo.Cadastros;
 using Servico.Cadastros;
 using Servico.Tabelas;
+using System.Web;
 
 namespace Capitulo1.Controllers
 {
@@ -61,12 +62,23 @@ namespace Capitulo1.Controllers
         // Com a implementação das action GET , nos restam agora as que respondem ao HTTP POST.Duas delas referem-se à atualização ou
         // inserção de um produto. Eelas são semelhantes. Desta maneira, vamos criar um método privado para estas requisições.
         // implementação  há a invocação ao método de serviço para gravar o produto, independente de ser atualização ou inserção
-        private ActionResult GravarProduto(Produto produto)
+        private ActionResult GravarProduto(Produto produto, HttpPostedFileBase logotipo, string chkRemoverImagem)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (chkRemoverImagem != null)
+                    {
+                        produto.Logotipo = null;
+                    }
+                    if (logotipo != null)
+                    {
+                        produto.LogotipoMimeType = logotipo.ContentType;
+
+                        produto.Logotipo = SetLogotipo(logotipo);
+                    }
+
                     produtoServico.GravarProduto(produto);
                     return RedirectToAction("Index");
                 }
@@ -108,9 +120,9 @@ namespace Capitulo1.Controllers
         // POST: Produtos/Create
         //Create para o POST , que persistirá os dados informados na visão
         [HttpPost]
-        public ActionResult Create(Produto produto)
+        public ActionResult Create(Produto produto, HttpPostedFileBase logotipo, string chkRemoverImagem)
         {
-            return GravarProduto(produto);
+            return GravarProduto(produto, logotipo, chkRemoverImagem);
         }
 
 
@@ -124,11 +136,11 @@ namespace Capitulo1.Controllers
 
 
 
-        // POST: Produtos/Edit/action Edit ( POST ) para persistir suas alterações.
+        // POST: Produtos/Edit/action Edit ( POST ) para persistir suas alterações.     
         [HttpPost]
-        public ActionResult Edit(Produto produto)
+        public ActionResult Edit(Produto produto, HttpPostedFileBase logotipo = null, string chkRemoverImagem = null)
         {
-            return GravarProduto(produto);
+            return GravarProduto(produto, logotipo, chkRemoverImagem);
         }
 
 
@@ -157,6 +169,24 @@ namespace Capitulo1.Controllers
             {
                 return View();
             }
+        }
+
+        public FileContentResult GetLogotipo(int id)
+        {
+            Produto produto = produtoServico.ObterProdutoPorId(id);
+            if (produto != null)
+            {
+                return File(produto.Logotipo, produto.LogotipoMimeType);
+            }
+            return null;
+        }
+
+        private byte[] SetLogotipo(HttpPostedFileBase logotipo)
+        {
+            var bytesLogotipo = new byte[logotipo.ContentLength];
+            logotipo.InputStream.Read(bytesLogotipo, 0, logotipo.ContentLength);
+
+            return bytesLogotipo;
         }
     }
 }

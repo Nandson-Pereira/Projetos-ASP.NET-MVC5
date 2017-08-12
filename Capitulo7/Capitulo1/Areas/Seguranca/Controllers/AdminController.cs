@@ -186,7 +186,8 @@ namespace Capitulo1.Areas.Seguranca.Controllers
 
 
         // GET: Seguranca/Admin
-        [Authorize]
+        
+        [Authorize(Roles = "Administradores")]
         public ActionResult Index()
         {
             return View(GerenciadorUsuario.Users);
