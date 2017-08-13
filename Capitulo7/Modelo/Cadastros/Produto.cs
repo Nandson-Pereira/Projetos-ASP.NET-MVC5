@@ -24,13 +24,9 @@ namespace Modelo.Cadastros
 
         [DisplayName("Fabricante")]
         public int? FabricanteId { get; set; }
-        //Propriedades reeferente a funcionalidade de upload de fotos/imagens
-        public string LogotipoMimeType { get; set; }
-        public byte[] Logotipo { get; set; }
 
 
         public Categoria Categoria { get; set; }
-
         public Fabricante Fabricante { get; set; }
 
     }
